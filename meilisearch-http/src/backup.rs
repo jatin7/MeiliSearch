@@ -278,7 +278,7 @@ fn backup_index_documents(data: &web::Data<Data>, reader: &MainReader, folder_pa
     let mut offset = 0;
     loop {
         let documents = crate::routes::document::get_all_documents_sync(data, reader, index_uid, offset, backup_batch_size, None)?;
-        if documents.len() == 0 { break; } else { offset += backup_batch_size; }
+        if documents.is_empty() { break; } else { offset += backup_batch_size; }
 
         for document in documents {
             serde_json::to_writer(&file, &document)?;
